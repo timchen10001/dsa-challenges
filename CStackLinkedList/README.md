@@ -98,5 +98,3 @@
 ## [ 1000,  ]
 ## After Clearing:
 ## [  ]
-## 
-## ➜  CStackLinkedList git:(main) ✗
