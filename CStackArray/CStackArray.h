@@ -3,7 +3,7 @@
 #include <iomanip>
 
 template <class T>
-class CStack {
+class CStackArray {
 private:
     unsigned int m_StepSize;
     unsigned int m_Number;
@@ -11,8 +11,8 @@ private:
     T* m_Array;
 
 public:
-    CStack();
-    ~CStack();
+    CStackArray();
+    ~CStackArray();
     void Show();
     bool Push(T value);
     bool Pop(T& val);
@@ -21,7 +21,7 @@ public:
 };
 
 template <class T>
-inline CStack<T>::CStack()
+inline CStackArray<T>::CStackArray()
     : m_StepSize(5)
     , m_Number(0)
     , m_RealSize(5)
@@ -30,13 +30,13 @@ inline CStack<T>::CStack()
 }
 
 template <class T>
-inline CStack<T>::~CStack()
+inline CStackArray<T>::~CStackArray()
 {
     delete m_Array;
 }
 
 template <class T>
-inline void CStack<T>::Show()
+inline void CStackArray<T>::Show()
 {
     int i;
     std::cout<< "[ ";
@@ -54,7 +54,7 @@ inline void CStack<T>::Show()
 }
 
 template <class T>
-inline bool CStack<T>::Push(T value)
+inline bool CStackArray<T>::Push(T value)
 {
     if (!m_Array) return false;
     if (m_Number == m_RealSize)
@@ -66,7 +66,9 @@ inline bool CStack<T>::Push(T value)
         m_Array = array;
         m_Array[m_Number++] = value;
         m_RealSize += m_StepSize;
-        std::cout << "陣列空間不足，動態配置大小為 " << m_RealSize << " 之陣列\n";
+        std::cout << "\n陣列空間不足，動態配置大小為 "
+                  << m_RealSize
+                  << " 之陣列\n";
     }
     else
     {
@@ -75,8 +77,10 @@ inline bool CStack<T>::Push(T value)
     return true;
 }
 
+
+// 傳參考
 template <class T>
-inline bool CStack<T>::Pop(T& val)
+inline bool CStackArray<T>::Pop(T& val)
 {
     if (m_Number == 0) return false;
     val = m_Array[--m_Number];
@@ -84,14 +88,28 @@ inline bool CStack<T>::Pop(T& val)
 }
 
 template <class T>
-inline bool CStack<T>::Insert(unsigned int position, T value)
+inline bool CStackArray<T>::Insert(unsigned int position, T value)
 {
-    if (position+1 > m_Number) 
+    // 插入位置 超過實際資料數量，等同Push
+    if (position+1 > m_Number)
         return Push(value);
+    // 
     else if (m_Number+1 <= m_RealSize)
     {
-        T current = m_Array[position];
-        T next;
+        // e.g. Insert(1, 10)
+        // [ 1, 2, 3, 4, 5 ]
+        // -> insert 10 in 1
+        // [ 1, 2, 2, 3, 4, 5 ]
+        // [ 1, 10, 2, 3, 4, 5 ] 
+        // done.
+
+        // 以current, next 分別暫存 當前與下一 位置之數值
+        // 先把起點數值存在current
+        // 循序將下一位置數值換成當前數值
+        // 將起點數值換成input值
+        
+        T current = m_Array[position]; 
+        T next; 
         unsigned int i;
         for (i = position+1; i < m_Number+1; i++)
         {
@@ -111,13 +129,16 @@ inline bool CStack<T>::Insert(unsigned int position, T value)
         delete m_Array;
         m_Array = array;
         m_RealSize += m_StepSize;
+        std::cout << "\n陣列空間不足，動態配置大小為 "
+                  << m_RealSize
+                  << " 之陣列\n";
         return Insert(position, value);
     }
     return true;
 }
 
 template <class T>
-inline bool CStack<T>::Remove(unsigned int position, T& val)
+inline bool CStackArray<T>::Remove(unsigned int position, T& val)
 {
     if (!m_Number) return false;
     if (position+1 >= m_Number) return Pop(val);
@@ -129,6 +150,4 @@ inline bool CStack<T>::Remove(unsigned int position, T& val)
     }
     m_Number--;
     return true;
-
-    
 }

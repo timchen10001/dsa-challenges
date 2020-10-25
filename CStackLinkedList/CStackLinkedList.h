@@ -13,36 +13,37 @@ public:
 };
 
 template <class T>
-class CStackLL
+class CStackLinkedList
 {
 private:
     CNode<T> *m_First;
+    CNode<T> *m_Tail;
     unsigned int m_Number;
 
 public:
-    CStackLL();
-    ~CStackLL();
+    CStackLinkedList();
+    ~CStackLinkedList();
     void Show();
     bool Push(T value);
     bool Pop(T &val);
     bool Insert(unsigned int position, T value);
-    bool Remove(unsigned int position);
+    bool Remove(unsigned int position, T& value);
     void Clear();
     void ShowNumber();
 };
 
 template <class T>
-inline CStackLL<T>::CStackLL()
+inline CStackLinkedList<T>::CStackLinkedList()
     : m_Number(0)
 {
     m_First = new CNode<T>;
 }
 
 template <class T>
-inline CStackLL<T>::~CStackLL()
+inline CStackLinkedList<T>::~CStackLinkedList()
 {
     CNode<T>* current = m_First;
-    while (current)
+    while (current->m_Next)
     {
         delete current;
         current = current->m_Next;
@@ -50,27 +51,30 @@ inline CStackLL<T>::~CStackLL()
 }
 
 template <class T>
-inline void CStackLL<T>::Show()
+inline void CStackLinkedList<T>::Show()
 {
-    CNode<T> *current = m_First;
+    unsigned int i;
+    CNode<T>* current = m_First;
     std::cout << "[ ";
-    while (current)
+    for (i = 0; i < m_Number; i++)
     {
         std::cout << current->m_Value;
-        current = current->m_Next;
-        if (current)
+        if (current->m_Next)
             std::cout << ", ";
+        current = current->m_Next;
     }
     std::cout << " ]\n";
 }
 
 template <class T>
-inline bool CStackLL<T>::Push(T value)
+inline bool CStackLinkedList<T>::Push(T value)
 {
-    if (!m_First)
-        return false;
-    if (m_Number == 0)
+
+    if (m_First == NULL && m_Number == 0)
+    {
+        m_First = new CNode<T>;
         m_First->m_Value = value;
+    }
     else
     {
         CNode<T> *current = m_First;
@@ -87,26 +91,40 @@ inline bool CStackLL<T>::Push(T value)
 }
 
 template <class T>
-inline bool CStackLL<T>::Pop(T &val)
+inline bool CStackLinkedList<T>::Pop(T &val)
 {
-    if (!m_First)
+    if (--m_Number == 0)
         return false;
-    unsigned int i;
     CNode<T> *current = m_First;
     CNode<T> *deleteNode;
-    for (i = 0; i < m_Number - 2; i++)
+    if (m_First->m_Next == NULL)
+    {
+        delete m_First;
+        m_First = m_First->m_Next;
+        return true;
+    }
+    unsigned int i;
+    for (i = 0; i < m_Number -1; i++)
+    {
+        // if (current->m_Next == NULL)
+            // return false;
         current = current->m_Next;
-
-    deleteNode = current->m_Next;
+    }
+    deleteNode = current->m_Next ? current->m_Next : current;
     val = deleteNode->m_Value;
     delete deleteNode;
     current->m_Next = NULL;
-    m_Number--;
+    // m_Number--;
+    // deleteNode = current->m_Next;
+    // val = deleteNode->m_Value;
+    // delete deleteNode;
+    // current->m_Next = NULL;
+    // m_Number--;
     return true;
 }
 
 template <class T>
-inline bool CStackLL<T>::Remove(unsigned int position)
+inline bool CStackLinkedList<T>::Remove(unsigned int position, T& val)
 {
     if (m_Number == 0)
         return false;
@@ -116,13 +134,16 @@ inline bool CStackLL<T>::Remove(unsigned int position)
     if (position == 0)
     {
         deleteNode = m_First;
-        m_First = m_First->m_Next;
+        val = m_First->m_Value;
+        if (m_First->m_Next)
+            m_First = m_First->m_Next;
     }
     else
     {
         for (i = 0; i < position - 1; i++)
             current = current->m_Next;
         deleteNode = current->m_Next;
+        val = deleteNode->m_Value;
         current->m_Next = deleteNode->m_Next;
     }
 
@@ -132,7 +153,7 @@ inline bool CStackLL<T>::Remove(unsigned int position)
 }
 
 template <class T>
-inline bool CStackLL<T>::Insert(unsigned int position, T value)
+inline bool CStackLinkedList<T>::Insert(unsigned int position, T value)
 {
     if (!m_First)
         return false;
@@ -162,16 +183,17 @@ inline bool CStackLL<T>::Insert(unsigned int position, T value)
 }
 
 template <class T>
-inline void CStackLL<T>::Clear()
+inline void CStackLinkedList<T>::Clear()
 {
     if (m_Number == 0) return;
     unsigned int num = m_Number;
+    int val;
     for (unsigned int i = 0; i < num; i++)
-        Remove(0);
+        Remove(0, val);
 }
 
 template <class T>
-inline void CStackLL<T>::ShowNumber()
+inline void CStackLinkedList<T>::ShowNumber()
 {
     std::cout << m_Number << " ";
 }
