@@ -2,22 +2,22 @@
 #include <iostream>
 
 template <class T>
-class CNode
+class CListNode
 {
 public:
-    CNode<T> *m_Next;
+    CListNode<T> *m_Next;
     T m_Value;
 
-    CNode() : m_Next(NULL), m_Value(){};
-    ~CNode(){};
+    CListNode() : m_Next(NULL), m_Value(){};
+    ~CListNode(){};
 };
 
 template <class T>
 class CStackLinkedList
 {
 private:
-    CNode<T> *m_First;
-    CNode<T> *m_Tail;
+    CListNode<T> *m_First;
+    CListNode<T> *m_Tail;
     unsigned int m_Number;
 
 public:
@@ -36,13 +36,13 @@ template <class T>
 inline CStackLinkedList<T>::CStackLinkedList()
     : m_Number(0)
 {
-    m_First = new CNode<T>;
+    m_First = new CListNode<T>;
 }
 
 template <class T>
 inline CStackLinkedList<T>::~CStackLinkedList()
 {
-    CNode<T>* current = m_First;
+    CListNode<T>* current = m_First;
     while (current->m_Next)
     {
         delete current;
@@ -54,7 +54,7 @@ template <class T>
 inline void CStackLinkedList<T>::Show()
 {
     unsigned int i;
-    CNode<T>* current = m_First;
+    CListNode<T>* current = m_First;
     std::cout << "[ ";
     for (i = 0; i < m_Number; i++)
     {
@@ -72,13 +72,13 @@ inline bool CStackLinkedList<T>::Push(T value)
 
     if (m_First == NULL && m_Number == 0)
     {
-        m_First = new CNode<T>;
+        m_First = new CListNode<T>;
         m_First->m_Value = value;
     }
     else
     {
-        CNode<T> *current = m_First;
-        CNode<T> *newNode = new CNode<T>;
+        CListNode<T> *current = m_First;
+        CListNode<T> *newNode = new CListNode<T>;
         if (!newNode)
             return false;
         newNode->m_Value = value;
@@ -95,8 +95,8 @@ inline bool CStackLinkedList<T>::Pop(T &val)
 {
     if (--m_Number == 0)
         return false;
-    CNode<T> *current = m_First;
-    CNode<T> *deleteNode;
+    CListNode<T> *current = m_First;
+    CListNode<T> *deleteNode;
     if (m_First->m_Next == NULL)
     {
         delete m_First;
@@ -129,8 +129,8 @@ inline bool CStackLinkedList<T>::Remove(unsigned int position, T& val)
     if (m_Number == 0)
         return false;
     unsigned int i;
-    CNode<T> *deleteNode;
-    CNode<T> *current = m_First;
+    CListNode<T> *deleteNode;
+    CListNode<T> *current = m_First;
     if (position == 0)
     {
         deleteNode = m_First;
@@ -157,7 +157,7 @@ inline bool CStackLinkedList<T>::Insert(unsigned int position, T value)
 {
     if (!m_First)
         return false;
-    CNode<T> *insertNode = new CNode<T>;
+    CListNode<T> *insertNode = new CListNode<T>;
     if (!insertNode)
         return false;
     insertNode->m_Value = value;
@@ -172,7 +172,7 @@ inline bool CStackLinkedList<T>::Insert(unsigned int position, T value)
         return Push(value);
 
     unsigned int i;
-    CNode<T> *current = m_First;
+    CListNode<T> *current = m_First;
     for (i = 0; i < position - 1; i++)
         current = current->m_Next;
 
