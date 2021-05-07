@@ -3,7 +3,7 @@
 chmod -x ./run.sh && ./run.sh
 ```
 
-## terminal result
+# terminal result
 ```cpp
 Run RL
 Run RL
