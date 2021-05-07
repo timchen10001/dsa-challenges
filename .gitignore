@@ -1,2 +1,5 @@
 # ignore compiled binary file.
 **/main
+
+# macOS
+.DS_Store
