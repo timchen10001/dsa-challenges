@@ -13,9 +13,6 @@
 // 2 6 3 7 4 5 7 6 7
 // 25 5 12 10 8 16 14 20 18
 
-void MyUnion(int u, int v);
-int find(int u);
-
 int main(void)
 {
     int i, j, e;
