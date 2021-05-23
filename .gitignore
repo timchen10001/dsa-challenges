@@ -5,3 +5,7 @@
 **/.DS_Store
 
 **/.dist
+
+**/*.dSYM
+
+.vscode
