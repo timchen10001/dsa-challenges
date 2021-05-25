@@ -9,34 +9,42 @@ private:
     CBasicArray<T> m_Array;
 
 public:
-    bool push(T value);
-    bool pop(T& val);
+    CStackArray() {};
+    ~CStackArray() {};
     unsigned int size();
     T top();
-
+    bool push(T value);
+    bool pop(T& val);
+    void show();
 };
 
 template <class T>
 inline unsigned int CStackArray<T>::size() {
-    unsigned int result = this->m_Number;
+    unsigned int result = m_Array->m_Number;
     return result;
 };
 
 template <class T>
 inline T CStackArray<T>::top() {
-    if (this->m_Number == 0) {
+    unsigned int size = m_Array->m_Number;
+    if (size == 0) {
         return NULL;
     }
     
-    return this->m_Array[this->m_Number-1];
+    return m_Array[size-1];
 };
 
 template <class T>
 inline bool CStackArray<T>::push(T value) {
-    return this->push_back(value);
+    return m_Array.push_back(value);
 };
 
 template <class T>
 inline bool CStackArray<T>::pop(T& val) {
-    return this->pop_back(val);
+    return m_Array.pop_back(val);
+};
+
+template <class T>
+inline void CStackArray<T>::show() {
+    m_Array.show();
 };
