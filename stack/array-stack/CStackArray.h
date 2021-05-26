@@ -1,5 +1,5 @@
 #pragma once
-#include "/Users/chenyiting/Codes/dsa-challenges/array/dynamic-array/CBasicArray.h"
+#include "../../array/dynamic-array/CBasicArray.h"
 #include <iostream>
 #include <iomanip>
 
@@ -12,26 +12,27 @@ public:
     CStackArray() {};
     ~CStackArray() {};
     unsigned int size();
-    T top();
+    T top(T fallback);
     bool push(T value);
+    bool pop();
     bool pop(T& val);
     void show();
 };
 
 template <class T>
 inline unsigned int CStackArray<T>::size() {
-    unsigned int result = m_Array->m_Number;
-    return result;
+    return m_Array.size();
 };
 
 template <class T>
-inline T CStackArray<T>::top() {
-    unsigned int size = m_Array->m_Number;
+inline T CStackArray<T>::top(T fallback) {
+    unsigned int size = m_Array.size();
+
     if (size == 0) {
-        return NULL;
+        return fallback;
     }
     
-    return m_Array[size-1];
+    return m_Array.find(size-1);
 };
 
 template <class T>
@@ -42,6 +43,10 @@ inline bool CStackArray<T>::push(T value) {
 template <class T>
 inline bool CStackArray<T>::pop(T& val) {
     return m_Array.pop_back(val);
+};
+template <class T>
+inline bool CStackArray<T>::pop() {
+    return m_Array.pop_back();
 };
 
 template <class T>
