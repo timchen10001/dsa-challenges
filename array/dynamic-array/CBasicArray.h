@@ -14,11 +14,14 @@ public:
     CBasicArray();
     ~CBasicArray();
     void show();
+    unsigned int size();
     bool push_back(T value);
+    bool pop_back();
     bool pop_back(T& val);
     
     bool insert(unsigned int position, T value);
     bool remove(unsigned int position, T& val);
+    T find(unsigned int position);
 };
 
 template <class T>
@@ -58,13 +61,23 @@ inline void CBasicArray<T>::show()
 }
 
 template <class T>
+inline T CBasicArray<T>::find(unsigned int position) {
+    return m_Array[position];
+};
+
+template <class T>
+inline unsigned int CBasicArray<T>::size() {
+    unsigned int result = m_Number;
+    return result;
+};
+
+template <class T>
 inline bool CBasicArray<T>::push_back(T value)
 {
     if (!m_Array)
         return false;
 
-    if (m_Number == m_RealSize)
-    {
+    if (m_Number == m_RealSize) {
         T* array = new T[m_RealSize + m_StepSize];
         if (!array)
             return false;
@@ -79,11 +92,10 @@ inline bool CBasicArray<T>::push_back(T value)
         std::cout << "\n陣列空間不足，動態配置大小為 "
                   << m_RealSize
                   << " 之陣列\n";
-    }
-    else
-    {
+    } else {
         m_Array[m_Number++] = value;
     }
+
     return true;
 }
 
@@ -99,16 +111,21 @@ inline bool CBasicArray<T>::pop_back(T& val)
 
     return true;
 }
+template <class T>
+inline bool CBasicArray<T>::pop_back()
+{
+    return --m_Number == 0 ? false : true;
+}
+
 
 template <class T>
 inline bool CBasicArray<T>::insert(unsigned int position, T value)
 {
     // 插入位置 超過實際資料數量，等同Push
-    if (position+1 > m_Number)
+    if (position + 1 > m_Number) {
         return this->push_back(value);
-    // 
-    else if (m_Number+1 <= m_RealSize)
-    {
+
+    } else if (m_Number+1 <= m_RealSize) {
         // e.g. Insert(1, 10)
         // [ 1, 2, 3, 4, 5 ]
         // -> insert 10 in 1
@@ -122,9 +139,8 @@ inline bool CBasicArray<T>::insert(unsigned int position, T value)
         // 將起點數值換成input值
         
         T current = m_Array[position]; 
-        T next; 
-        unsigned int i;
-        for (i = position+1; i < m_Number+1; i++)
+        T next;
+        for (unsigned int i = position+1; i < m_Number+1; i++)
         {
             next = m_Array[i];
             m_Array[i] = current;
@@ -157,7 +173,9 @@ inline bool CBasicArray<T>::insert(unsigned int position, T value)
 template <class T>
 inline bool CBasicArray<T>::remove(unsigned int position, T& val)
 {
-    if (!m_Number) return false;
+    if (!m_Number)
+        return false;
+
     if (position+1 >= m_Number)
         return this->pop_back(val);
 
