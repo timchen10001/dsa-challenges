@@ -36,7 +36,9 @@ public:
     bool pop_front();
     bool insert(unsigned int position, T value);
     bool remove(unsigned int position);
+    T search(unsigned int position, T fallback);
     void show();
+    unsigned int size();
 };
 
 template <class T>
@@ -200,3 +202,22 @@ inline bool CDoubleLinkedList<T>::remove(unsigned int position) {
 
     return true;
 }
+
+template <class T>
+inline unsigned int CDoubleLinkedList<T>::size() {
+    unsigned int result = m_Size;
+    return result;
+};
+
+template <class T>
+inline T CDoubleLinkedList<T>::search(unsigned int position, T fallback) {
+    if (m_Size != 0) {
+        CDoubleListNode<T>* current = m_Head;
+        for (unsigned int i = 0; i <= position; i++) {
+            current = current->m_Next;
+        }
+        return current->m_Value;
+    }
+
+    return fallback;
+};
