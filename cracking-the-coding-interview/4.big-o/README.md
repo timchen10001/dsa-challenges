@@ -237,15 +237,15 @@ int f(int n) {
 
 ### 範例 7
 
-> O(N+P), O(2N), O(N + logN)
+> O(N+P), O(2N), O(N+logN)
 
 ### 範例 8
 
 > - 定義 S 為最長字串長度，A 為陣列長度。
 > - 對每個字串排序是 O(SlogS)
-> - 須對陣列中每個字串都這樣做，故為 O(A * SlogS)
-> - 排序 A 個字串，每一個字串比較需要 O(S)，總共要比較 O(AlogA) 次，這將花費 O(S * AlogA) 的時間。
-> - 加總 O(A*SlogS + S*AlogA) = `O(A*S*(logA + logS))`
+> - 須對陣列中每個字串都這樣做，故為 O(A⋅SlogS)
+> - 排序 A 個字串，每一個字串比較需要 O(S)，總共要比較 O(A⋅logA) 次，這將花費 O(S⋅A⋅logA) 的時間。
+> - 加總 O(A⋅SlogS + S⋅A⋅logA) = `O(A⋅S⋅(logA+logS))`
 
 ### 範例 9
 
@@ -268,4 +268,3 @@ int f(int n) {
 ### 範例 11
 
 > O(N)
-
