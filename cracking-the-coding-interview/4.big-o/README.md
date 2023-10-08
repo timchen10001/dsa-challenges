@@ -101,6 +101,20 @@ for(int x: arr) {
 
 `O(X!)` > `O(2ˣ)` > `O(X²)` > `O(X⋅logX)` > `O(X)` > `O(logX)`
 
+### 多項式型複雜度 (Polynomial)
+
+- O(LogN) - Logarithmic
+- O(N) - Linear
+- O(NLogN) - Linearithmic
+- O(N²) - Quadratic
+- O(N³) - Cubic
+
+### 指數型複雜度 (Exponential)
+
+O(2ᴺ) - Exponential
+O(N!) - Factorial
+O(Nᴺ) Exponential
+
 ## 加與乘
 
 - 相加
