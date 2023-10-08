@@ -9,6 +9,8 @@ Find the maximum product of width and height
 ## Brute Force Solution
 
 ```cpp
+// Time: O(N²)
+// Space: O(1)
 class Solution {
 public:
     int maxArea(vector<int>& height) {
@@ -30,6 +32,8 @@ public:
 > Greedy method + two pointers
 
 ```cpp
+// Time: O(N)
+// Space: O(1)
 class Solution {
 public:
     int maxArea(vector<int>& height) {
