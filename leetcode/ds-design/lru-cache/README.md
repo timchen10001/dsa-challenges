@@ -4,9 +4,9 @@
 
 ## Keynote
 
-
-- LinkedHashMap (key, ListNode*);
-- DoubleList (ListNode*)
+- LinkedHashMap
+  - HashMap (key, ListNode*)
+  - DoubleList (ListNode*)
 - LRUCache
   - `makeRecently`
   - `addRecently`
